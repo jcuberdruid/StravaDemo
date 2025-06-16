@@ -9,12 +9,12 @@ import SwiftUI
 
 @main
 struct StravaDemoApp: App {
-    @State var appContainer = AppDependencies()
+    @State var deps = AppDependencies()
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environment(appContainer)
+            AppNavigationView()
+                .environment(deps)
         }
     }
 }
