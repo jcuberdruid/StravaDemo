@@ -1,5 +1,5 @@
 # Strava Demo
-Small but scalable SwiftUI app to view activities and stats from Strava API.
+Small but scalable SwiftUI app to view activities and stats from Strava API, including an OAuth flow for login.
 
 ## Prerequisites
 * Xcode 16.4
