@@ -1,13 +1,14 @@
 //
-//  AppNavigationViewModel.swift
+//  ActivityViewModel.swift
 //  StravaDemo
 //
 //  Created by Jason on 6/16/25.
 //
 
+
 import Observation
 
-@Observable final class AppNavigationViewModel {
+@Observable final class ActivityViewModel {
     private var deps: AppDependencies?
     func injectIfNeeded(_ deps: AppDependencies) {
         guard self.deps == nil else { return }
@@ -20,17 +21,18 @@ import Observation
         case error
     }
     var state: State = .loading
-    var athlete: Athlete?
-    
-    func refreshAthlete() async {
-        guard let athleteService = deps?.athleteService else { return }
+    var activities: [Activity] = []
+        
+    func refreshActivities() async {
+
+        guard let activityService = deps?.activityService else { return }
+        
         do {
             self.state = .loading
-            let athlete = try await athleteService.getAthlete()
+            let activities = try await activityService.getActivities()
             self.state = .loaded
-            self.athlete = athlete
+            self.activities = activities
         } catch {
-            self.athlete = nil
             self.state = .error
         }
     }

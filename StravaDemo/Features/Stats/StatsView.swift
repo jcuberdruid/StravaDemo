@@ -9,23 +9,30 @@ import SwiftUI
 
 struct StatsView: View {
     @Environment(AppDependencies.self) var deps
+    
     @State var viewModel = StatsViewModel()
     var athlete: Athlete?
     
+    private let columns = [
+        GridItem(.flexible(), spacing: 12),
+        GridItem(.flexible(), spacing: 12)
+    ]
+    
     var body: some View {
-        VStack {
-            Text("StatsView")
-            
+        ScrollView {
             switch viewModel.state {
             case .loading:
                 Text("Loading")
             case .loaded:
-                Text("\(viewModel.athleteStats?.allRideTotals.count ?? 99)")
+                LazyVGrid(columns: columns, spacing: 12) {
+                    ForEach(viewModel.labeledStats, id: \.title) { metric in
+                        StatCard(metric: metric)
+                    }
+                }
+                .padding(.horizontal)
             case .error:
                 Text("Error")
             }
-                
-          
         }
         .onAppear {
             viewModel.injectIfNeeded(deps)

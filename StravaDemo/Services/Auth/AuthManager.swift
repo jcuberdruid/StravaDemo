@@ -39,6 +39,10 @@ import AuthenticationServices
         }
     }
     
+    func signOut() {
+        _currentToken = nil
+    }
+    
     var isAuthenticated = false
 
     var token: Token? {
@@ -60,7 +64,7 @@ import AuthenticationServices
             .init(name: "redirect_uri", value: "\(customScheme)://jcuberdruid.com/callback"),
             .init(name: "response_type", value: "code"),
             .init(name: "approval_prompt", value: "auto"),
-            .init(name: "scope", value: "activity:read")
+            .init(name: "scope", value: "activity:read_all")
         ]
         
         return components.url!

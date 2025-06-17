@@ -6,29 +6,43 @@
 //
 
 import SwiftUI
-import AuthenticationServices
 
 struct AppNavigationView: View {
     @Environment(AppDependencies.self) var deps
     @State var viewModel = AppNavigationViewModel()
         
     var body: some View {
-        NavigationStack {
             TabView {
                 Tab("Activity", systemImage: "mountain.2.fill") {
-                    ActivityView()
+                    NavigationStack {
+                        ActivityView()
+                            .navigationTitle(
+                                viewModel.state == .loading ? "Loading..." :
+                                    viewModel.state == .error ? "Error" :
+                                    "Welcome \(viewModel.athlete?.firstname ?? "Athlete")"
+                            )
+                            .toolbar {
+                                ToolbarItem(placement: .topBarTrailing) {
+                                    Profile(athlete: viewModel.athlete)
+                                }
+                            }
+                    }
                 }
                 
                 Tab("Stats", systemImage: "chart.xyaxis.line") {
-                    StatsView(athlete: viewModel.athlete)
+                    NavigationStack {
+                        StatsView(athlete: viewModel.athlete)
+                            .navigationTitle(
+                                viewModel.state == .loading ? "Loading..." :
+                                    viewModel.state == .error ? "Error" :
+                                    "\(viewModel.athlete?.firstname ?? "Athlete")’s Stats"
+                            )
+                            .toolbar {
+                                Profile(athlete: viewModel.athlete)
+                            }
+                    }
                 }
             }
-            .navigationTitle(
-                viewModel.state == .loading ? "Loading..." :
-                    viewModel.state == .error ? "Error" :
-                    "Welcome \(viewModel.athlete?.firstname ?? "Athlete")"
-            )
-        }
         .onAppear {
             viewModel.injectIfNeeded(deps)
         }

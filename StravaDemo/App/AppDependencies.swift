@@ -23,6 +23,13 @@ import Observation
         return StravaAthleteStatsService(apiClient: apiClient) // will be mock
     }
     
+    var activityService: ActivityService {
+        if auth.isAuthenticated {
+            return StravaActivityService(apiClient: apiClient)
+        }
+        return StravaActivityService(apiClient: apiClient) // will be mock
+    }
+    
     init() {
         self.auth = AuthManager()
         self.apiClient = StravaAPIClient(auth: auth)

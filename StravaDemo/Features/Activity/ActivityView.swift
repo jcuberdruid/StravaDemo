@@ -9,11 +9,34 @@ import SwiftUI
 
 struct ActivityView: View {
     @Environment(AppDependencies.self) var deps
-    @Environment(\.webAuthenticationSession) private var webAuthenticationSession
 
+    @State var viewModel = ActivityViewModel()
+    
     var body: some View {
-        NavigationStack {
-            ActivityListView()
+        VStack {
+            switch viewModel.state {
+            case .loading:
+                ProgressView()
+                Text("Loading...")
+            case .loaded:
+                List(viewModel.activities, id: \.id) { activity in
+                    ActivityRow(activity: activity)
+                }
+                .listStyle(.plain)
+            case .error:
+                Text("Error")
+            }
+        }
+        .onAppear {
+            viewModel.injectIfNeeded(deps)
+        }
+        .task {
+            await viewModel.refreshActivities()
+        }
+        .onChange(of: deps.auth.isAuthenticated) {
+            Task {
+                await viewModel.refreshActivities()
+            }
         }
     }
 }

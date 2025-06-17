@@ -31,6 +31,7 @@ final class StravaAPIClient {
         let (responseData, _) = try await urlSession.data(for: request)
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
+        decoder.dateDecodingStrategy = .iso8601
         let decodedData = try decoder.decode(T.self, from: responseData)
         return decodedData
     }
