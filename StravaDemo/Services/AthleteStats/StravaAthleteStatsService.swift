@@ -8,14 +8,14 @@
 import Observation
 
 @Observable
-class StravaAthleteService: AthleteService {
+class StravaAthleteStatsService: AthleteStatsService {
     var apiClient: StravaAPIClient
     
     init(apiClient: StravaAPIClient) {
         self.apiClient = apiClient
     }
     
-    func getAthlete() async throws -> Athlete {
-        return try await apiClient.get("/athlete")
+    func getAthleteStats(id: Int) async throws -> AthleteStats {
+        return try await apiClient.get("/athletes/\(id)/stats")
     }
 }

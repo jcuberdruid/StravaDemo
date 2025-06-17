@@ -16,25 +16,21 @@ final class StravaAPIClient {
         self.auth = auth
     }
     
-    enum Endpoint: String {
-        case athlete = "/athlete"
-        
-        var url: URL {
-            return URL(string: "https://www.strava.com/api/v3\(self.rawValue)")!
-        }
-    }
-    
     enum APIError: Error {
         case noToken
     }
-    func get<T: Decodable>(_ endpoint: Endpoint) async throws -> T {
+    func get<T: Decodable>(_ endpointPath: String) async throws -> T {
+        guard let url = URL(string: "https://www.strava.com/api/v3\(endpointPath)") else {
+            throw URLError(.badURL)
+        }
         guard let token = try? await auth.token?.accessToken else { throw APIError.noToken }
-        
-        var request = URLRequest(url: endpoint.url)
+
+        var request = URLRequest(url: url)
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         
         let (responseData, _) = try await urlSession.data(for: request)
         let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
         let decodedData = try decoder.decode(T.self, from: responseData)
         return decodedData
     }

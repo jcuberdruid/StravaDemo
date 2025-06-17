@@ -20,7 +20,7 @@ struct AppNavigationView: View {
                 }
                 
                 Tab("Stats", systemImage: "chart.xyaxis.line") {
-                    StatsView()
+                    StatsView(athlete: viewModel.athlete)
                 }
             }
             .navigationTitle(

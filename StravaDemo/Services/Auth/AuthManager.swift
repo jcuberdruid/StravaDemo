@@ -101,7 +101,7 @@ import AuthenticationServices
         request.httpMethod = "POST"
         let body: [String: Any] = [
             "client_id": StravaSecrets.clientId,
-            "client_secret": StravaSecrets.clientId,
+            "client_secret": StravaSecrets.clientSecret,
             "grant_type": grantType.rawValue,
             grantType.grantValueKey: grantValue
         ]
@@ -121,13 +121,21 @@ import AuthenticationServices
         case missingToken
     }
     private func performTokenRefresh() async throws {
+        
         guard let currentToken = self._currentToken else {
             throw TokenRefreshError.missingToken
+           
         }
+       
+        
         let refreshToken = currentToken.refreshToken
+  
         self._currentToken = try await getOAuthToken(
             grantType: .refreshToken,
             grantValue: refreshToken
         )
+      
+        
+      
     }
 }
