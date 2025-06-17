@@ -5,6 +5,7 @@
 //  Created by Jason on 6/16/25.
 //
 
+import Foundation
 import Observation
 import SwiftUI
 
@@ -23,7 +24,6 @@ import SwiftUI
     var state: State = .loading
     var athleteStats: AthleteStats?
     
-    
     var labeledStats: [LabeledStat] = []
         
     func refreshAthleteStats(athlete: Athlete?) async {
@@ -33,7 +33,6 @@ import SwiftUI
         do {
             self.state = .loading
             let athleteStats = try await athleteStatsService.getAthleteStats(id: athlete.id)
-            self.state = .loaded
             self.athleteStats = athleteStats
         } catch {
             self.state = .error
@@ -73,10 +72,10 @@ import SwiftUI
             ))
         }
         
-        if let count = athleteStats?.ytdRideTotals.elapsedTime {
+        if let elapsedTime = athleteStats?.ytdRideTotals.elapsedTime {
             labeledStats.append(LabeledStat(
                 title: "Riding time this year",
-                value: "\(count)s",
+                value: "\(Duration.seconds(elapsedTime).compactDurationDescription)",
                 valueDescription: "",
                 systemImageName: "timer",
                 tint: Color.red
@@ -103,10 +102,10 @@ import SwiftUI
             ))
         }
         
-        if let count = athleteStats?.recentRideTotals.elapsedTime {
+        if let elapsedTime = athleteStats?.recentRideTotals.elapsedTime {
             labeledStats.append(LabeledStat(
                 title: "Riding time recently",
-                value: "\(count)s",
+                value: "\(Duration.seconds(elapsedTime).compactDurationDescription)",
                 valueDescription: "",
                 systemImageName: "timer",
                 tint: Color.red
@@ -116,7 +115,7 @@ import SwiftUI
         if let movingTime = athleteStats?.ytdRideTotals.movingTime {
             labeledStats.append(LabeledStat(
                 title: "Moving time this year",
-                value: "\(movingTime)s",
+                value: "\(Duration.seconds(movingTime).compactDurationDescription)s",
                 valueDescription: "Time in sec",
                 systemImageName: "timer",
                 tint: .red
@@ -143,11 +142,10 @@ import SwiftUI
             ))
         }
 
-        // MARK: –– Recent ride totals
         if let movingTime = athleteStats?.recentRideTotals.movingTime {
             labeledStats.append(LabeledStat(
                 title: "Moving time recently",
-                value: "\(movingTime)s",
+                value: "\(Duration.seconds(movingTime).compactDurationDescription)",
                 valueDescription: "Time in sec",
                 systemImageName: "timer",
                 tint: .red
@@ -174,7 +172,6 @@ import SwiftUI
             ))
         }
 
-        // MARK: –– All-time ride totals
         if let distance = athleteStats?.allRideTotals.distance {
             labeledStats.append(LabeledStat(
                 title: "Total distance",
@@ -198,7 +195,7 @@ import SwiftUI
         if let movingTime = athleteStats?.allRideTotals.movingTime {
             labeledStats.append(LabeledStat(
                 title: "Total moving time",
-                value: "\(movingTime)s",
+                value: "\(Duration.seconds(movingTime).compactDurationDescription)",
                 valueDescription: "Time in sec",
                 systemImageName: "timer",
                 tint: .red
@@ -208,7 +205,7 @@ import SwiftUI
         if let elapsedTime = athleteStats?.allRideTotals.elapsedTime {
             labeledStats.append(LabeledStat(
                 title: "Total elapsed time",
-                value: "\(elapsedTime)s",
+                value: "\(Duration.seconds(elapsedTime).compactDurationDescription)",
                 valueDescription: "Time in sec",
                 systemImageName: "timer",
                 tint: .red
@@ -234,23 +231,13 @@ import SwiftUI
                 tint: .red
             ))
         }
+        
+        self.state = .loaded
     }
 }
-/*
- 
- struct AthleteStats: Codable {
-     let biggestRideDistance: Float?
-     let recentRideTotals: RideTotals
-     let ytdRideTotals: RideTotals
-     let allRideTotals: RideTotals
- }
 
- struct RideTotals: Codable {
-     let count: Int
-     let distance: Int
-     let movingTime: Int
-     let elapsedTime: Int
-     let elevationGain: Float
-     let achievementCount: Int?
- }
- */
+extension Duration {
+    var compactDurationDescription: String {
+        return self.formatted(.units(allowed: [.hours, .minutes], width: .narrow))
+    }
+}

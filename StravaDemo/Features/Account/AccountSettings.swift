@@ -7,12 +7,14 @@
 
 import SwiftUI
 import AuthenticationServices
+import TipKit
 
-struct Profile: View {
+struct AccountSettings: View {
     @Environment(AppDependencies.self) var deps
     @Environment(\.webAuthenticationSession) private var webAuthenticationSession
     
     @State private var showingSheet = false
+    let loginTip = LoginTip()
     
     var athlete: Athlete?
     
@@ -36,6 +38,11 @@ struct Profile: View {
             }
             .frame(width: 32, height: 32)
             .clipShape(Circle())
+            .popoverTip(deps.auth.isAuthenticated ? nil : loginTip)
+            .task {
+                try? Tips.resetDatastore()
+                try? Tips.configure([.displayFrequency(.immediate)])
+            }
         }
         .sheet(isPresented: $showingSheet) {
             NavigationStack {
@@ -69,7 +76,7 @@ struct Profile: View {
                         }
                     }
                 }
-                .navigationTitle("SwiftyRava")
+                .navigationTitle("Account")
             }
         }
     }

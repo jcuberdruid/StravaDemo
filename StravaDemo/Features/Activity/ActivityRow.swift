@@ -52,7 +52,10 @@ struct ActivityRow: View {
             HStack {
                 Image(systemName: activity.typeIconName)
                     .foregroundStyle(.secondary)
-                Text(activity.name).fontWeight(.medium)
+                    .frame(minWidth: 30)
+                Text(activity.name)
+                    .fontWeight(.medium)
+                    .lineLimit(isOpen ? nil : 1)
                 Spacer()
                 Text(String(format: "%.2f m", activity.distance))
                     .monospacedDigit()

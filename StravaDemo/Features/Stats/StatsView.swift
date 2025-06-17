@@ -22,7 +22,8 @@ struct StatsView: View {
         ScrollView {
             switch viewModel.state {
             case .loading:
-                Text("Loading")
+                ProgressView()
+                Text("Loading...")
             case .loaded:
                 LazyVGrid(columns: columns, spacing: 12) {
                     ForEach(viewModel.labeledStats, id: \.title) { metric in

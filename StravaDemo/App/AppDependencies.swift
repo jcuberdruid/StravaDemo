@@ -14,20 +14,20 @@ import Observation
         if auth.isAuthenticated {
             return StravaAthleteService(apiClient: apiClient)
         }
-        return StravaAthleteService(apiClient: apiClient) // will be mock
+        return MockAthleteService()
     }
     var athleteStatsService: AthleteStatsService {
         if auth.isAuthenticated {
             return StravaAthleteStatsService(apiClient: apiClient)
         }
-        return StravaAthleteStatsService(apiClient: apiClient) // will be mock
+        return MockAthleteStatsService()
     }
     
     var activityService: ActivityService {
         if auth.isAuthenticated {
             return StravaActivityService(apiClient: apiClient)
         }
-        return StravaActivityService(apiClient: apiClient) // will be mock
+        return MockActivityService()
     }
     
     init() {

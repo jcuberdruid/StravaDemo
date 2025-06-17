@@ -23,7 +23,7 @@ struct AppNavigationView: View {
                             )
                             .toolbar {
                                 ToolbarItem(placement: .topBarTrailing) {
-                                    Profile(athlete: viewModel.athlete)
+                                    AccountSettings(athlete: viewModel.athlete)
                                 }
                             }
                     }
@@ -38,7 +38,7 @@ struct AppNavigationView: View {
                                     "\(viewModel.athlete?.firstname ?? "Athlete")’s Stats"
                             )
                             .toolbar {
-                                Profile(athlete: viewModel.athlete)
+                                AccountSettings(athlete: viewModel.athlete)
                             }
                     }
                 }
