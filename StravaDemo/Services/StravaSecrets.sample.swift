@@ -10,5 +10,6 @@
 struct StravaSecrets {
     static let clientId = "REPLACE_ME"
     static let clientSecret = "REPLACE_ME"
+    static let callbackDomain = "REPLACE_ME"
 }
 */

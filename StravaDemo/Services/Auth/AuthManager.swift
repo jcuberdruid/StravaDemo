@@ -61,7 +61,7 @@ import AuthenticationServices
         var components = URLComponents(string: "https://www.strava.com/oauth/mobile/authorize")!
         components.queryItems = [
             .init(name: "client_id", value: StravaSecrets.clientId),
-            .init(name: "redirect_uri", value: "\(customScheme)://jcuberdruid.com/callback"),
+            .init(name: "redirect_uri", value: "\(customScheme)://\(StravaSecrets.callbackDomain)/callback"),
             .init(name: "response_type", value: "code"),
             .init(name: "approval_prompt", value: "auto"),
             .init(name: "scope", value: "activity:read_all")

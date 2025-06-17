@@ -20,7 +20,7 @@ struct MockActivityService: ActivityService {
         let run1 = Activity(
             resourceState: 2,
             name: "Morning Run in GG Park",
-            distance: 6_200,
+            distance: 6_20,
             movingTime: 1_900,
             elapsedTime: 2_050,
             totalElevationGain: 65,
@@ -71,7 +71,7 @@ struct MockActivityService: ActivityService {
         let ride2 = Activity(
             resourceState: 2,
             name: "Sunset Marin Headlands Ride",
-            distance: 28_400,
+            distance: 28_40,
             movingTime: 5_400,
             elapsedTime: 5_980,
             totalElevationGain: 540,
@@ -173,7 +173,7 @@ struct MockActivityService: ActivityService {
         let run4 = Activity(
             resourceState: 2,
             name: "Interval Track Workout",
-            distance: 8_000,
+            distance: 8_00,
             movingTime: 2_400,
             elapsedTime: 2_540,
             totalElevationGain: 10,
@@ -275,7 +275,7 @@ struct MockActivityService: ActivityService {
         let walk6 = Activity(
             resourceState: 2,
             name: "Evening Walk with Friends",
-            distance: 4_200,
+            distance: 4_20,
             movingTime: 2_400,
             elapsedTime: 2_650,
             totalElevationGain: 20,
@@ -326,7 +326,7 @@ struct MockActivityService: ActivityService {
         let run7 = Activity(
             resourceState: 2,
             name: "Treadmill Tempo Run",
-            distance: 10_000,
+            distance: 10_00,
             movingTime: 2_800,
             elapsedTime: 2_900,
             totalElevationGain: 0,
@@ -377,7 +377,7 @@ struct MockActivityService: ActivityService {
         let ride8 = Activity(
             resourceState: 2,
             name: "Lunch Spin – Turbo Trainer",
-            distance: 15_000,
+            distance: 15_00,
             movingTime: 3_000,
             elapsedTime: 3_100,
             totalElevationGain: 0,

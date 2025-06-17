@@ -12,7 +12,7 @@ struct LoginTip: Tip {
         Text("You’re browsing demo data!")
     }
     var message: Text? {
-        Text("Login with your Strava account to personalize your experience.")
+        Text("Check it out! Then login with your Strava account to personalize your experience.")
     }
     var image: Image? {
         Image(systemName: "person.crop.rectangle.badge.plus.fill")

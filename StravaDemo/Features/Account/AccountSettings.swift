@@ -22,22 +22,29 @@ struct AccountSettings: View {
         Button {
             showingSheet.toggle()
         } label: {
-            Group {
-                if let url = athlete?.profile, let url = URL(string: url) {
-                    AsyncImage(url: url) { phase in
-                        switch phase {
-                        case .success(let image):
-                            image.resizable()
-                        default:
-                            Image(systemName: "person.crop.circle.fill")
+            HStack(spacing: 0) {
+                deps.auth.isAuthenticated ? nil : (
+                    Text("Login")
+                        .font(.caption)
+                )
+
+                Group {
+                    if let url = athlete?.profile, let url = URL(string: url) {
+                        AsyncImage(url: url) { phase in
+                            switch phase {
+                            case .success(let image):
+                                image.resizable()
+                            default:
+                                Image(systemName: "person.crop.circle.fill")
+                            }
                         }
+                    } else {
+                        Image(systemName: "person.crop.circle.fill")
                     }
-                } else {
-                    Image(systemName: "person.crop.circle.fill")
                 }
+                .frame(width: 32, height: 32)
+                .clipShape(Circle())
             }
-            .frame(width: 32, height: 32)
-            .clipShape(Circle())
             .popoverTip(deps.auth.isAuthenticated ? nil : loginTip)
             .task {
                 try? Tips.resetDatastore()
