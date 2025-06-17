@@ -5,7 +5,9 @@ Small SwiftUI app to view activities and stats from Strava API.
 * Xcode 16.4
 * Strave app (client ID + client secret + callback domain) with credentials configured in [`StravaSecrets.sample.swift`](https://github.com/jcuberdruid/StravaDemo/blob/main/StravaDemo/Services/StravaSecrets.sample.swift).
 
-Note that you can just uncomment to expose any `StravaSecrets` struct even with invalid values to successfully build the app and use it in demo mode.
+Note that you can just uncomment that file to expose any `StravaSecrets` struct even with invalid values to successfully build the app and use it in demo mode.
+
+If you use real Strava app credentials, ensure you login with the same user as the one that created the app on Strava, unless you've received an increase from Strava from the default limit of 1 user. 
 
 ## Things to improve/address
 
