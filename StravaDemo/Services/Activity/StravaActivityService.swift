@@ -7,7 +7,7 @@
 
 import Observation
 
-@Observable
+
 class StravaActivityService: ActivityService {
     var apiClient: StravaAPIClient
     

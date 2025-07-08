@@ -51,7 +51,7 @@ import AuthenticationServices
             if currentToken.expiresAt > Date.now.addingTimeInterval(30) {
                 return currentToken
             }
-            // Refresh since it's expiring in the next 30s
+            // refresh since it's expiring in the next 30s
             try await self.performTokenRefresh()
             return self._currentToken
         }
@@ -100,7 +100,7 @@ import AuthenticationServices
             }
         }
     }
-    private func getOAuthToken(grantType: GrantType, grantValue: String) async throws -> Token {
+    private func getOAuthToken(grantType: GrantType, grantValue: String) async throws -> Token { //inital and refresh
         var request = URLRequest(url: URL(string: "https://www.strava.com/oauth/token")!)
         request.httpMethod = "POST"
         let body: [String: Any] = [

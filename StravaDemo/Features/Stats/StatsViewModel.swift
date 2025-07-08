@@ -9,6 +9,7 @@ import Foundation
 import Observation
 import SwiftUI
 
+
 @Observable final class StatsViewModel {
     private var deps: AppDependencies?
     func injectIfNeeded(_ deps: AppDependencies) {
@@ -230,6 +231,24 @@ import SwiftUI
                 systemImageName: "trophy.fill",
                 tint: .red
             ))
+        }
+        
+        
+        // using c++ wrapper
+        
+        if let distance = athleteStats?.recentRideTotals.distance {
+            let circumference = Double.pi*0.5 //assuming tire diameter of 0.5 m -- should be user editable 
+            
+            let revolutions = BicycleWrapper.revolutions(withDistance: Double(distance), tireCircumference: circumference)
+            
+            labeledStats.append(LabeledStat(
+                title: "YTD Tire revolutions",
+                value: "\(revolutions)",
+                valueDescription: "",
+                systemImageName: "tire",
+                tint: .blue
+            ))
+            
         }
         
         self.state = .loaded
